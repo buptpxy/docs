@@ -1,0 +1,3 @@
+req.param  delete/:id delete/1
+req.body  delete body: JSON.stringify({ id : 1 })
+req.query delete?id=1

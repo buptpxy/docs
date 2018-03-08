@@ -1,0 +1,124 @@
+1.创世块初始化
+geth --datadir ~/Desktop/ethereum/data1 init genesis.json
+
+
+2.启动并进入控制台,开两个窗口来启动两个节点
+在第一个窗口执行以下命令启动一个节点，注意启动之后不要关闭窗口。在启动第一个节点时并没有指定port参数，因此此处采用了默认的port，也就是30303。 
+geth --datadir ~/ethereum/data1 --networkid 733 --nodiscover console
+
+下面在另外一个窗口，换一个端口，比如30306，再换一下datadir，来启动第二个节点
+geth --datadir ~/ethereum/data2 --port 30306 --networkid 733 --nodiscover console
+
+3.添加coinbase账户
+personal.newAccount()
+personal.listAccounts
+eth.coinbase
+personal.listWallets
+
+data1: 
+0xc54ea468cccff604df112bfc935c30db4a1dbdb9
+enode://44fd447b60cc87beedef0b56606653fc5cc840622b17a51818fa3bfd9b003ba80a3f1a31e3efb8aa03302b845a0ed02a6c8895fad43d5f5c329eb044c0e86fec@[::]:30303?discport=0
+
+
+data2: 
+0x6d56cf669d97dfaaf9206e0ebaa95c2df2eada4d
+enode://da4a2b0c23b3a99c4b292228eae23c297d2a9b626950f1cf712b5525a9f94cf4645da6bf1d49b57c5f149e5d90fca427790ced046b442be08c9f6ecfb57710c1@[::]:30306?discport=0
+
+
+4.联盟链互通
+admin.peers
+admin.nodeInfo.enode
+
+admin.addPeer("enode://44fd447b60cc87beedef0b56606653fc5cc840622b17a51818fa3bfd9b003ba80a3f1a31e3efb8aa03302b845a0ed02a6c8895fad43d5f5c329eb044c0e86fec@[::]:30303?discport=0")
+
+admin.addPeer("enode://da4a2b0c23b3a99c4b292228eae23c297d2a9b626950f1cf712b5525a9f94cf4645da6bf1d49b57c5f149e5d90fca427790ced046b442be08c9f6ecfb57710c1@[::]:30306?discport=0")
+
+admin.peers
+
+5.查询余额并挖矿
+eth.getBalance(eth.coinbase)
+或那我们拿节点1的这个地址在节点2的控制台查询一下信息：
+eth.getBalance("0xc54ea468cccff604df112bfc935c30db4a1dbdb9")
+eth.getBalance("0x6d56cf669d97dfaaf9206e0ebaa95c2df2eada4d")
+
+miner.start()
+miner.stop()
+
+6.交易转账
+personal.unlockAccount("0x916103898f6c735b3bfd055954fbfea7b7bb0661")
+或
+personal.unlockAccount(“0xc54ea468cccff604df112bfc935c30db4a1dbdb9”,"123",300)
+
+eth.sendTransaction({from: eth.coinbase, to: '0x02b7344004c45465796f779b7b95d7912c2ef572', value: 100000000})
+或
+web3.eth.sendTransaction({from:'0xc54ea468cccff604df112bfc935c30db4a1dbdb9', to:'0x6d56cf669d97dfaaf9206e0ebaa95c2df2eada4d', value:web3.toWei(2, "ether")})
+
+web3.eth.getTransaction(transactionHash)
+
+
+eth.getBalance("0x02b7344004c45465796f779b7b95d7912c2ef572")
+或
+web3.eth.getBalance("0x02b7344004c45465796f779b7b95d7912c2ef572")
+
+miner.start()
+
+7.注意事项
+如果一个节点重启，则需要重新添加peer。另外，在实际生产中可去掉console命令，通过之前介绍的attach命令进入控制台.
+
+
+
+
+
+
+
+
+8.用远程连接的方式创建私有链
+
+geth --datadir ~/Desktop/ethereum/data1 --networkid 733 --rpc --rpcaddr "0.0.0.0" --
+port "30303" --rpcapi "admin,debug,eth,miner,net,personal,shh,txpool,web3" --rpcport "8999" --rpccorsdomain '*' --nodiscover --mine --minerthreads=1
+或
+geth --fast --cache=512 --datadir ~/Desktop/ethereum/data1 --networkid 733 --rpcapi admin,debug,eth,miner,net,personal,shh,txpool,web3 --rpc --rpcaddr 0.0.0.0 --rpcport "8999"  --rpccorsdomain '*' --nodiscover console
+
+然后另外启动一个控制台
+
+nc -lp 8999 &
+netstat -na|grep 8999
+geth attach http://localhost:8999 或 http://39.104.59.85:8999 
+ 
+开放指定端口sudo ipfw add 4007 allow tcp from any to any dst-port 4007
+telnet localhost 4007
+
+如果不连接远程就是geth --datadir ~/ethereum/data3 --networkid 733 console
+
+
+personal.newAccount()  0x916103898f6c735b3bfd055954fbfea7b7bb0661
+personal.listAccounts   
+eth.coinbase
+personal.listWallets
+miner.setEtherbase(eth.accounts[1]) web3.eth.getBalance("0x916103898f6c735b3bfd055954fbfea7b7bb0661") 或者 eth.getBalance(eth.coinbase）
+
+miner.start()
+若返回null,
+1.则先执行miner.setEtherbase(eth.coinbase)或miner.setEtherbase(eth.accounts[3])
+2.或其实miner已经执行，只不过它在等待你发送交易之后才会生成新的区块。也就是说执行了miner.start(),它一直在等待，这是发送一笔交易，再查看区块高度发现已经增加一块。
+
+miner.stop()
+miner.start(3); admin.sleepBlocks(1); miner.stop();这里这一串语句表示启动3个线程来挖矿,挖到第一个区块就停止.
+
+如果链条已经被关闭的话，或者启动不了，或者挖矿无法产生比特币的话，可以重置以太坊私链。
+
+重置以太坊私有链的方法 
+1.删除根目录下的隐藏文件夹.ethash, 在mac系统中该文件夹在 ~/下 
+2.删除以太坊私有链所在文件夹下的geth/keystore两个文件夹
+
+
+
+personal.unlockAccount(“0xf5ef5ce7d8a89407c9d7d0650967fb965c1f68d4”,"123456",300)
+
+
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST", "OPTIONS"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+
+
+
+2018-01-29T09:52:51.918612Z 1 [Note] A temporary password is generated for root@localhost: )q<i3rVI6aVl

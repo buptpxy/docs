@@ -1,0 +1,26 @@
+personal.unlockAccount("0x39e8f5dee56996e843859ca4fd2bfdf1bd587db9","123",300)
+
+truffle compile
+
+truffle migrate --network onode --reset
+
+miner.start()
+
+发布完合约后需要替换合约地址，这个需要将合约在以太坊部署并取得对应地址 
+然后运行ipfs节点
+
+ipfs daemon
+
+启动项目
+
+npm start
+
+
+
+
+
+
+~/Desktop/ipfs-ethereum-demo2
+~/Downloads/IPFS-Ethereum-Image-master
+
+tar -zcvf ~/Downloads/IPFS-Ethereum-Image-master.tar.gz ~/Downloads/IPFS-Ethereum-Image-master

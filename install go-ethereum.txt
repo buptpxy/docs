@@ -1,0 +1,50 @@
+1.执行apt-get update
+
+在进行apt-get update操作时，出现如下的错误信息：
+E: 无法获得锁 /var/lib/apt/lists/lock - open (11: Resource temporarily unavailable)
+E: 无法对目录 /var/lib/apt/lists/ 加锁
+这个问题是的意思是用于apt-get操作时的lock(应该是用于互斥的锁)，出现了不能够得到锁的问题,可以以下命令进行操作
+
+sudo rm /var/lib/apt/lists/lock
+
+sudo rm /var/cache/apt/archives/lock
+
+然后，再次进行apt-get update操作，应该就可以了。
+
+如果出错则更换源
+  	首先备份源列表:
+	sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+	而后用gedit或其他编辑器打开，参照https://www.cnblogs.com/webnote/p/5767853.html
+	并把里面的源更换成
+deb http://debian.ustc.edu.cn/ubuntu/ trusty main multiverse restricted universe
+
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main multiverse restricted universe
+
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main multiverse restricted universe
+
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main multiverse restricted universe
+
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main multiverse restricted universe
+
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main multiverse restricted universe
+
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main multiverse restricted universe
+
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main multiverse restricted universe
+
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main multiverse restricted universe
+
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main multiverse restricted universe
+
+2.对于404Notfound的源：删除/etc/apt/sources.list.d/fcitx-team-ubuntu-nightly-xenial.list文件
+
+3.
+sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+如果出错则用apt-get -f install来修复。
+
+4.
+sudo apt-get update
+sudo apt-get install ethereum
+
+5.geth version

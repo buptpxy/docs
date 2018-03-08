@@ -1,0 +1,3 @@
+testrpc -m "cradle mimic jar flavor ensure deal traffic door fortune end frown noodle"
+
+npm start

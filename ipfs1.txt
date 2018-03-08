@@ -1,0 +1,47 @@
+ipfs init
+
+ipfs config edit
+
+ipfs id
+id QmNhxb5KwVTXShgGhHhAxJFyT5bwYuRRU8ejgB2SkyiCHa 
+
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST", "OPTIONS"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+
+ipfs daemon
+
+
+ipfs cat /ipfs/QmNhxb5KwVTXShgGhHhAxJFyT5bwYuRRU8ejgB2SkyiCHa/readme
+
+
+
+1.将file.txt添加到ipfs节点
+ipfs add file.txt
+QmbrevseVQKf1vsYMsxCscRf6D7S2dftYpHwxkYf94pc7T
+2.同步节点数据到IPFS网络
+新建一个终端，执行ipfs daemon
+浏览器访问https://ipfs.io/ipfs/QmbrevseVQKf1vsYMsxCscRf6D7S2dftYpHwxkYf94pc7T
+3.通过ipfs创建目录存储文件
+我们也可以通过ipfs的相关命令在ipfs的根目录下面创建文件夹，并且将file.txt文件移动或者拷贝到我们创建的文件夹中。
+
+⚠️：cp不会改变文件hash，mv会改变hash寻址。
+
+ipfs cat QmbrevseVQKf1vsYMsxCscRf6D7S2dftYpHwxkYf94pc7T
+
+ipfs files mkdir /pxy
+ipfs files cp /ipfs/QmbrevseVQKf1vsYMsxCscRf6D7S2dftYpHwxkYf94pc7T /pxy/file.txt
+ipfs files ls /pxy/
+ipfs files read /pxy/file.txt
+
+4.在IPFS新增一个目录
+ipfs add -r ipfs-tutorial/
+
+5.通过Hash查看数据IPFS网络数据
+https://ipfs.io/ipfs/QmPzuBfgH2ox4Eujj1THd6ykLiceyEqB9jecuAzPzd3nPV
+
+当我们修改网站内容重新添加到ipfs时，hash会发生变化，当我们网站更新时，我们可以将网站发布到IPNS，在IPNS中，允许我们节点的域名空间中引用一个IPFS hash，也就是说我们可以通过节点ID对项目根目录的IPFS HASH进行绑定，以后我们访问网站时直接通过节点·ID访问即可，当我们更新博客时，重新发布到IPNS`即可。
+6.发布到IPNS
+ipfs name publish QmPzuBfgH2ox4Eujj1THd6ykLiceyEqB9jecuAzPzd3nPV
+ipfs id
+ipfs name resolve <peerId>
+https://ipfs.io/ipns/QmNhxb5KwVTXShgGhHhAxJFyT5bwYuRRU8ejgB2SkyiCHa

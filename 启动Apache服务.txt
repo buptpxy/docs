@@ -1,0 +1,31 @@
+启动Apache服务
+在Mac系统中已经安装好了Apache服务,我们只需要通过如下方式启动即可直接使用
+
+在终端中输入如下命令,启动Apache服务
+sudo apachectl start
+注: 因为sudo是系统管理指令,所以需要输入电脑密码(输入字符时不会显示,输入完成敲击回车即可)
+
+在终端中输入如下命令,查看Apache服务版本
+sudo apachectl -v
+在本机中版本信息如下
+
+Server version: Apache/2.4.18 (Unix)
+Server built:   Feb 20 2016 20:03:19
+在浏览器中输入如下网址,检查Apache服务是否启动成功
+http://localhost
+http://127.0.0.1
+如果Apache服务启动成功,页面会显示It works!
+
+Apache的其他配置
+关闭Apache服务
+在终端中输入如下命令,关闭Apache服务
+
+sudo apachectl stop
+重启Apache服务
+在终端中输入如下命令,重启Apache服务
+
+sudo apachectl restart
+
+进入/Library/WebServer/Documents,
+
+在该目录下新建一个测试的PHP页面，输入命令：sudo vim test.php

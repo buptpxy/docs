@@ -1,0 +1,4 @@
+cd /usr/local/etc/nginx/
+sudo vim nginx.conf
+sudo nginx
+sudo nginx -s reload

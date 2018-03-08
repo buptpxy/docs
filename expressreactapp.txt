@@ -1,0 +1,6 @@
+npm install express-generator -g
+express --view=ejs ReactNodeNew 
+cd ReactNodeNew
+npm install
+npm install mysql —save
+create-react-app frontend

@@ -1,0 +1,22 @@
+亲测过的写法如下：
+get请求的时候
+fetch('MYURL').
+then(res=>res.json()).
+then(json=>dispatch(myActionName(json))).
+catch(err=>dispatch(myErrActionName(err)));
+
+POST请求的时候
+fetch(‘URL’,
+{
+method:'POST',
+headers: { 
+'Accept': 'application/json',
+'Content-Type': 'application/json' 
+},
+body:JSON.stringify({'data':json})
+}
+)
+.then(res => res.json())
+.then(json =>dispatch(receivePosts(json)))
+.catch(error=>dispatch(requestExceptions(error)));
+JSON.stringify这个很重要，否则我们的数据无法被识别为json会很痛苦。希望对您的开发有帮助

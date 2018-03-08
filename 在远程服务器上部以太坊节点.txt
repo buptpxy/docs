@@ -1,0 +1,15 @@
+控制台1：
+1. ssh root@ip
+2. cd ethereum
+3. geth attach http://ip (控制台2)
+4. miner.stop() (控制台2)
+5. rm -rf data nohup.out
+6. mkdir data
+7. root/ethereum/go-ethereum/build/bin/geth account new --datadir "root/ethereum/data"
+8. root/ethereum/go-ethereum/build/bin/geth account list --keystore "root/ethereum/data/keystore"
+9. 把新生成的地址写到 genesis.json 中
+10. vi geth_start.sh 改 networkid
+11. root/ethereum/go-ethereum/build/bin/geth --datadir root/ethereum/data init genesis.json
+12. sudo ss -lptn 'sport = :30303'
+13. kill pid
+14. web3.eth.getBlock(0) (控制台2)

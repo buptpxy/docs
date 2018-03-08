@@ -1,0 +1,16 @@
+{
+    "config": {
+        "chainId": 7481,
+        "ByzantiumBlock": 0,
+        "eip155Block": 0,
+        "eip158Block": 0
+    },
+    "difficulty": "131072",
+    "gasLimit": "21000000",
+    "alloc": {
+        "0xab1abc3416f8511a3869062a59880584b311a8dc": { "balance": "250000000000000000000000000" },
+        "0x9d0eb7b4bb7bafc33d9b006eb13a2203681fdf95": { "balance": "250000000000000000000000000" },
+        "0x765bead85e5e0cd56ed0312aaf000330f806cd1f": { "balance": "250000000000000000000000000" },
+        "0xf87304e0dd0b614c4e44221328cb9aba623329ae": { "balance": "250000000000000000000000000" }
+    }
+}
