@@ -2,7 +2,7 @@
 2. git add .
 3. git commit -m "first commit"
 4. 在Github上创建一个Git仓库
-5. git remote add origin https://github.com/pengpeng1314/https://github.com/pengpeng1314/react-express-sequelize-mysql-crud.git
+5. git remote add origin https://github.com/pengpeng1314/react-express-sequelize-mysql-crud.git
 6. 我们可以先通过以下命令先将内容合并以下：git pull --rebase origin master
 7. 第一次提交时新建的远程仓库是空的，所以要加上-u这个参数用 git push -u origin master
    等远程仓库有内容后提交用 git push origin master
